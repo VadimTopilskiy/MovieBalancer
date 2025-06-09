@@ -1,0 +1,34 @@
+version: "3.9"
+services:
+#  web:
+#    build: .
+#    container_name: balancer_web
+#    restart: always
+#    depends_on:
+#      - db
+#    env_file:
+#      - .env
+#    ports:
+#      - "8000:8000"
+#    volumes:
+#      - ./:/app
+#    working_dir: /app
+#    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload --reload-dir /app
+
+  db:
+    image: postgres:14
+    container_name: balancer_postgres
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5422:5432"
+
+volumes:
+  pgdata:
